@@ -66,7 +66,10 @@ async function attempts (messageId, webhookId, options = {}) {
 async function messages (id, options = {}) {
   const url = urlJoin(defaultRequestOptions.baseUrl,'/v1/webhook', id, 'message')
   this.client = new Client(defaultRequestOptions.service)
-  const fullUrl = `${url}?page=${options.page}`
+  let fullUrl = `${url}?page=${options.page}`
+  if ( options.status ) {
+    fullUrl = `${fullUrl}&status=${options.status.toUpperCase()}`
+  }
   configureClient(this.client, fullUrl)
   const response = await this.client.get(fullUrl, 'List messages for webhook')
   return response.data
