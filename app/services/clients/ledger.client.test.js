@@ -61,30 +61,16 @@ class MockClient {
 
   async get (url, description) {
     let dataResponse
-    if (url.match(/\.*\/event/)) {
-      dataResponse = ledgerTransactionEventsFixture
-      return Promise.resolve({ data: dataResponse })
-    }
-    if (url.match(/\/transaction\//)) {
-      dataResponse = validCreatedTransactionDetailsResponse
-      return Promise.resolve({ data: dataResponse })
-    }
-    if (url.match(/\/report\/transactions-summary/)) {
-      dataResponse = validTransactionSummaryResponse
-      return Promise.resolve({ data: dataResponse })
-    }
-    if (url.match(/\/agreement/)) {
-      dataResponse = validTransactionSummaryResponse
-      return Promise.resolve({ data: dataResponse })
-    }
-    if (url.match(/\/payout/)) {
-      dataResponse = {}
-      return Promise.resolve({ data: dataResponse })
-    }
-    if (url.match(/\/transaction\?account_id.*limit_total/)) {
-      dataResponse = validTransactionSearchResponse
-      return Promise.resolve({ data: dataResponse })
-    }
+
+    if (url.match(/\.*\/event/)) dataResponse = ledgerTransactionEventsFixture
+    else if (url.match(/\/transaction\//)) dataResponse = validCreatedTransactionDetailsResponse
+    else if (url.match(/\/report\/transactions-summary/)) dataResponse = validTransactionSummaryResponse
+    else if (url.match(/\/agreement/)) dataResponse = validTransactionSummaryResponse
+    else if (url.match(/\/payout/)) dataResponse = {}
+    else if (url.match(/\/transaction\?account_id.*limit_total/)) dataResponse = validTransactionSearchResponse
+    else dataResponse = {}
+
+    return Promise.resolve({ data: dataResponse })
   }
 }
 
