@@ -11,7 +11,8 @@ const defaultRequestOptions = {
 }
 
 async function webhook (id, serviceId, gatewayAccountId, options = {}) {
-  const url = urlJoin(defaultRequestOptions.baseUrl, '/v1/webhook', id)
+  const baseUrl = options.baseUrl ? options.baseUrl : defaultRequestOptions.baseUrl
+  const url = urlJoin(baseUrl, '/v1/webhook', id)
   this.client = new Client(defaultRequestOptions.service)
   const fullUrl = `${url}?service_id=${serviceId}&gateway_account_id=${gatewayAccountId}`
   configureClient(this.client, fullUrl)
@@ -20,7 +21,8 @@ async function webhook (id, serviceId, gatewayAccountId, options = {}) {
 }
 
 async function signingSecret (webhookId, serviceId, gatewayAccountId, options = {}) {
-  const url = urlJoin(defaultRequestOptions.baseUrl, '/v1/webhook/', webhookId, '/signing-key')
+  const baseUrl = options.baseUrl ? options.baseUrl : defaultRequestOptions.baseUrl
+  const url = urlJoin(baseUrl, '/v1/webhook/', webhookId, '/signing-key')
   this.client = new Client(defaultRequestOptions.service)
   const fullUrl = `${url}?service_id=${serviceId}&gateway_account_id=${gatewayAccountId}`
   configureClient(this.client, fullUrl)
@@ -29,7 +31,8 @@ async function signingSecret (webhookId, serviceId, gatewayAccountId, options = 
 }
 
 async function resetSigningSecret (webhookId, serviceId, gatewayAccountId, options = {}) {
-  const url = urlJoin(defaultRequestOptions.baseUrl, '/v1/webhook/', webhookId, '/signing-key')
+  const baseUrl = options.baseUrl ? options.baseUrl : defaultRequestOptions.baseUrl
+  const url = urlJoin(baseUrl, '/v1/webhook/', webhookId, '/signing-key')
   this.client = new Client(defaultRequestOptions.service)
   const fullUrl = `${url}?service_id=${serviceId}&gateway_account_id=${gatewayAccountId}`
   configureClient(this.client, fullUrl)
@@ -48,7 +51,8 @@ async function webhooks (serviceId, gatewayAccountId, isLive, options = {}) {
 }
 
 async function message (id, webhookId, options = {}) {
-  const url = urlJoin(defaultRequestOptions.baseUrl, '/v1/webhook', webhookId, 'message', id)
+  const baseUrl = options.baseUrl ? options.baseUrl : defaultRequestOptions.baseUrl
+  const url = urlJoin(baseUrl, '/v1/webhook', webhookId, 'message', id)
   this.client = new Client(defaultRequestOptions.service)
   configureClient(this.client, url)
   const response = await this.client.get(url, 'Get webhook message')
@@ -56,7 +60,8 @@ async function message (id, webhookId, options = {}) {
 }
 
 async function attempts (messageId, webhookId, options = {}) {
-  const url = urlJoin(defaultRequestOptions.baseUrl, '/v1/webhook', webhookId, 'message', messageId, 'attempt')
+  const baseUrl = options.baseUrl ? options.baseUrl : defaultRequestOptions.baseUrl
+  const url = urlJoin(baseUrl, '/v1/webhook', webhookId, 'message', messageId, 'attempt')
   this.client = new Client(defaultRequestOptions.service)
   configureClient(this.client, url)
   const response = await this.client.get(url, 'Get webhook message delivery attempts')
@@ -101,7 +106,8 @@ async function updateWebhook (id, serviceId, gatewayAccountId, options = {}) {
       body.push({ op: 'replace', path, value: options[path] })
     }
   })
-  const url = urlJoin(defaultRequestOptions.baseUrl, '/v1/webhook', id)
+  const baseUrl = options.baseUrl ? options.baseUrl : defaultRequestOptions.baseUrl
+  const url = urlJoin(baseUrl, '/v1/webhook', id)
   this.client = new Client(defaultRequestOptions.service)
   const fullUrl = `${url}?service_id=${serviceId}&gateway_account_id=${gatewayAccountId}`
   configureClient(this.client, fullUrl)
@@ -110,7 +116,8 @@ async function updateWebhook (id, serviceId, gatewayAccountId, options = {}) {
 }
 
 async function resendWebhookMessage (webhookId, messageId, options = {}) {
-  const url = urlJoin(defaultRequestOptions.baseUrl, '/v1/webhook', webhookId, 'message', messageId, 'resend')
+  const baseUrl = options.baseUrl ? options.baseUrl : defaultRequestOptions.baseUrl
+  const url = urlJoin(baseUrl, '/v1/webhook', webhookId, 'message', messageId, 'resend')
   this.client = new Client(defaultRequestOptions.service)
   configureClient(this.client, url)
   const response = await this.client.post(url, {}, 'Schedule resending a message')
