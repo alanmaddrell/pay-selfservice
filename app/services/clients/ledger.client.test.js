@@ -121,8 +121,7 @@ describe('Ledger client', () => {
 
       await ledgerClient.transactionWithAccountOverride('id', { baseUrl: 'https://example.com' })
 
-      expect(configureSpy.getCall(0).args[0]).to.equal('http://127.0.0.1:8006/v1/transaction/id?override_account_id_restriction=true')
-      // expect(configureSpy.getCall(0).args[0]).to.equal('https://example.com/v1/transaction/id?override_account_id_restriction=true')
+      expect(configureSpy.getCall(0).args[0]).to.equal('https://example.com/v1/transaction/id?override_account_id_restriction=true')
     })
   })
 

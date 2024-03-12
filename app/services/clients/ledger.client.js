@@ -34,7 +34,8 @@ const transaction = async function transaction (id, gatewayAccountId, options = 
 }
 
 const transactionWithAccountOverride = async function transactionWithAccountOverride (id, options = {}) {
-  const url = urlJoin(defaultOptions.baseUrl,'/v1/transaction', id)
+  const baseUrl = options.baseUrl ? options.baseUrl : defaultOptions.baseUrl
+  const url = urlJoin(baseUrl,'/v1/transaction', id)
   this.client = new Client(defaultOptions.service)
   const fullUrl = `${url}?override_account_id_restriction=true`
   configureClient(this.client, fullUrl)
